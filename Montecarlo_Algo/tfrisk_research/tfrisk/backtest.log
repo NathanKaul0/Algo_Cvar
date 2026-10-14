@@ -1,0 +1,22 @@
+==========================================================================
+CLEAN BACKTEST - reimplemented EWMAC on public pysystemtrade prices
+==========================================================================
+  period                 1990-07-03 -> 2024-03-28
+  trading days           8,565
+  markets                34 (live/day: median 31, max 34)
+  annualised return       11.91%
+  annualised volatility   15.54%   (target 20%)
+  Sharpe (excess=0)         0.77
+  max drawdown           -33.51%
+  daily skewness           -0.19
+  daily excess kurtosis     5.07
+  monthly skewness          1.04   (trend following should be positive)
+  share of days short     37.50%   <- the corrupted data had essentially none
+
+  Sharpe by decade (sanity: trend decays after 2010):
+    1990s  n= 2400  ann +11.64%  vol 13.98%  Sharpe +0.83
+    2000s  n= 2520  ann +18.26%  vol 18.02%  Sharpe +1.01
+    2010s  n= 2570  ann  +4.11%  vol 13.85%  Sharpe +0.30
+    2020s  n= 1075  ann +16.30%  vol 16.38%  Sharpe +1.00
+
+  wrote strategy_returns.csv, positions.csv, positions_effective.csv, vol_effective.csv, pnl_by_market.csv

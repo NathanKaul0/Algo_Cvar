@@ -1,0 +1,54 @@
+
+============================================================================
+1. IS THE MISS A CONSTANT, OR IS IT TIMED?
+============================================================================
+  mean of loss / VaR90            -0.063
+
+  autocorrelation of |loss / VaR90|  (scale-free, so the
+  normality caveat above does not apply):
+    lag 1  +0.046    lag 5  +0.047    lag 20  +0.025
+  If the model had captured the conditional scale these would be ~0.
+  Positive values mean volatility the model did not see coming.
+
+============================================================================
+2. HOW MUCH SCALE IS MISSING, MEASURED HONESTLY
+============================================================================
+  Same-day exposures run through a trailing realised covariance of
+  the market moves, against the model's own scale on the same day.
+  Both sides are conditional, so this comparison is valid where the
+  two rejected in the note above are not.
+
+    trailing covariance window    60d:   realised / model = 1.105
+    trailing covariance window   250d:   realised / model = 1.096
+    trailing covariance window  1000d:   realised / model = 1.081
+
+  Modestly but persistently too narrow. Each market's own
+  volatility is already filtered by its own GARCH, so what is
+  missing is a PORTFOLIO-level quantity: the co-movement between
+  markets, which a trend book is concentrated in by construction.
+
+  worst 120-day stretch of loss/VaR90 ends 2004-05-10
+  five largest standardised losses:
+    2003-03-13  6.83 sigma
+    2015-01-16  6.74 sigma
+    2018-02-05  6.42 sigma
+    2022-03-09  5.87 sigma
+    2022-11-10  5.61 sigma
+
+============================================================================
+3. WOULD RESCALING THE PORTFOLIO VOLATILITY HAVE FIXED IT?
+============================================================================
+  A trailing EWMA correction factor is applied to the model's own
+  scale, estimated only from standardised losses it has already
+  produced. No new data, no new parameters beyond one decay.
+
+    lambda  half-life      90%      95%      99%  ES ratio
+    target                10.0      5.0      1.0
+  --------------------------------------------------------
+      0.99         69     8.60     4.13     0.94      1.06
+      0.97         23     8.69     4.33     1.04      1.04
+      0.94         11     8.90     4.75     1.12      1.03
+      0.90          7     9.34     5.01     1.31      1.02
+
+  For comparison, the uncorrected model:
+      none               12.81     7.86     2.49      1.10

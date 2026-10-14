@@ -1,0 +1,56 @@
+loaded 8,565 days, 34 markets
+  walking 7,305 test days, refit every 250...
+    1995-06-27  refit 24 markets   [0/7,305]
+    1996-06-21  refit 24 markets   [250/7,305]
+    1997-06-19  refit 26 markets   [500/7,305]
+    1998-06-17  refit 26 markets   [750/7,305]
+    1999-06-15  refit 26 markets   [1,000/7,305]
+    2000-06-09  refit 26 markets   [1,250/7,305]
+    2001-06-07  refit 28 markets   [1,500/7,305]
+    2002-06-06  refit 29 markets   [1,750/7,305]
+    2003-06-04  refit 29 markets   [2,000/7,305]
+    2004-06-01  refit 30 markets   [2,250/7,305]
+    2005-05-27  refit 31 markets   [2,500/7,305]
+    2006-05-25  refit 31 markets   [2,750/7,305]
+    2007-05-22  refit 31 markets   [3,000/7,305]
+    2008-05-19  refit 31 markets   [3,250/7,305]
+    2009-05-15  refit 31 markets   [3,500/7,305]
+    2010-05-12  refit 31 markets   [3,750/7,305]
+    2011-05-04  refit 31 markets   [4,000/7,305]
+    2012-04-25  refit 32 markets   [4,250/7,305]
+    2013-04-18  refit 32 markets   [4,500/7,305]
+    2014-04-11  refit 32 markets   [4,750/7,305]
+    2015-04-02  refit 32 markets   [5,000/7,305]
+    2016-03-22  refit 32 markets   [5,250/7,305]
+    2017-03-10  refit 33 markets   [5,500/7,305]
+    2018-02-26  refit 33 markets   [5,750/7,305]
+    2019-02-12  refit 33 markets   [6,000/7,305]
+    2020-01-29  refit 34 markets   [6,250/7,305]
+    2021-01-19  refit 34 markets   [6,500/7,305]
+    2022-01-13  refit 34 markets   [6,750/7,305]
+    2023-01-12  refit 34 markets   [7,000/7,305]
+    2024-01-10  refit 34 markets   [7,250/7,305]
+
+==============================================================================
+COVERAGE TEST - clean long/short backtest, 34 markets
+==============================================================================
+  test days 7,305   1995-06-27 -> 2024-03-28
+
+  model    level  target  actual  breaches   Kupiec   indep  ES ratio  verdict
+  --------------------------------------------------------------------------
+  OLD        90%   10.0%  12.03%       879    0.000   0.003      1.11  FAILS
+  OLD        95%    5.0%   7.19%       525    0.000   0.214      1.10  FAILS
+  OLD        99%    1.0%   2.34%       171    0.000   0.340      1.07  FAILS
+  NEW        90%   10.0%  12.81%       936    0.000   0.000      1.14  FAILS
+  NEW        95%    5.0%   7.86%       574    0.000   0.000      1.10  FAILS
+  NEW        99%    1.0%   2.49%       182    0.000   0.270      1.10  FAILS
+
+  ES ratio is realised tail loss over predicted, on breach days:
+  above 1 means the breaches were worse than the model said they
+  would be, which is the number CVaR exists to get right.
+
+  Tail shape, conditional (standardised by each model's own 90%):
+    OLD   realised 2.30   modelled 2.03
+    NEW   realised 2.18   modelled 2.10
+
+  wrote coverage_clean_results.csv (7,305 rows)

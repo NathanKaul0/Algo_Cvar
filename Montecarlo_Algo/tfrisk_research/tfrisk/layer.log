@@ -1,0 +1,66 @@
+================================================================================
+SCALE CORRECTION - every choice made on the training half
+================================================================================
+  train  1995-06-27 -> 2009-12-31   3,660 days
+  test   2010-01-04 -> 2024-03-28   3,645 days
+
+  constant correction estimated on training: x1.253  (the model's VaR is 25% too small)
+
+  Trailing-window selection, TRAINING half only:
+    window     90%     95%     99%    error
+       250   10.49    5.52    1.58    1.039  <- best
+       500   10.38    5.52    1.45    0.615  <- best
+      1000   10.33    5.57    1.53    0.857
+      2000   10.55    5.55    1.50    0.773
+
+  selected trailing window = 500 days
+
+================================================================================
+TRAINING HALF  (where the choices were made - expect flattery)
+================================================================================
+                                n     90%     95%     99%     Kup99   ind99   ES99
+  target                            10.00    5.00    1.00      >.05    >.05   1.00
+  ------------------------------------------------------------------------
+  uncorrected               3,660   13.66    8.77    2.81     0.000   0.528   1.13
+  constant x1.25            3,660   10.00    5.00    1.39     0.024   0.743   1.04
+  trailing 500d             3,660   10.38    5.52    1.45     0.011   0.797   1.07
+
+================================================================================
+HELD-OUT HALF  (the number that counts)
+================================================================================
+                                n     90%     95%     99%     Kup99   ind99   ES99
+  target                            10.00    5.00    1.00      >.05    >.05   1.00
+  ------------------------------------------------------------------------
+  uncorrected               3,645   11.96    6.94    2.17     0.000   0.362   1.05
+  constant x1.25            3,645    8.26    3.98    0.93     0.680   0.041   1.03
+  trailing 500d             3,645   10.34    5.35    1.37     0.033   0.189   1.07
+
+  Sensitivity on the held-out half - if only the selected window
+  works, the result is selection rather than a finding:
+    window     90%     95%     99%     Kup99
+       250   10.21    5.62    1.40     0.022
+       500   10.34    5.35    1.37     0.033  <- selected
+      1000    9.99    5.02    1.29     0.093
+      2000    9.66    4.80    1.26     0.127
+
+================================================================================
+ALL THREE LEVELS, HELD-OUT HALF - Kupiec p for every candidate
+================================================================================
+  The pre-registered choice is the 500-day window, because that is
+  what the training half selected. It is reported first and it is
+  the primary result. The longer windows are sensitivity: they do
+  BETTER out of sample than the one the selection picked, which is
+  evidence against the selection having flattered anything.
+
+  correction              90%      p    95%      p    99%      p   verdict
+  ----------------------------------------------------------------------
+  uncorrected           11.96  0.000   6.94  0.000   2.17  0.000   fails
+  constant x1.253        8.26  0.000   3.98  0.003   0.93  0.680   fails
+  trailing 250d         10.21  0.680   5.62  0.090   1.40  0.022   fails
+  trailing 500d         10.34  0.492   5.35  0.338   1.37  0.033   fails  *
+  trailing 1000d         9.99  0.978   5.02  0.955   1.29  0.093   PASSES all three
+  trailing 2000d         9.66  0.488   4.80  0.579   1.26  0.127   PASSES all three
+
+  * = the pre-registered choice
+
+  wrote coverage_adjusted.csv
